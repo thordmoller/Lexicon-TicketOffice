@@ -1,11 +1,10 @@
-﻿using static TicketOfficeAssignment.UserInputHandler;
-namespace TicketOfficeAssignment
+﻿namespace TicketOfficeAssignment
 {
     internal class Program
     {
         static void Main(string[] args) {
 
-            getUserInput();
+            UserInputHandler.getUserInput();    //Initiate program
         }
     }
 }

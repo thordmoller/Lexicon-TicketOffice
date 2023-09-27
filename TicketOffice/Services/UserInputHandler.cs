@@ -10,16 +10,14 @@ namespace TicketOfficeAssignment
     public static class UserInputHandler
     {
         public static void getUserInput() {
-
-            string ticketMessage = "Would you like a standing ticket?\n(type 'y' for a standing ticket or 'n' for a seated ticket and press enter.";
             string welcomeMessage = "Welcome to the Ticket Office!";
 
             WriteLine(welcomeMessage);
 
-            Customer customer = new Customer(getValidAgeFromUser(), true);
+            WriteLine(new Customer(getAgeFromUser(), userPrefSeated()).toString());
         }
 
-        private static int getValidAgeFromUser() {
+        private static int getAgeFromUser() {
 
             string message = "Please specify your age";
 
@@ -44,6 +42,30 @@ namespace TicketOfficeAssignment
                     return true;
             }
             return false;
+        }
+
+        //returns true if the user perfers a seated ticket
+        private static bool userPrefSeated() {
+
+            string message = "Would you like a seated ticket?";
+            string instructionMessage = "type 'y' for a seated ticket or 'n' for a standing ticket";
+
+            ConsoleKeyInfo keyPress;
+
+            do {
+                WriteLine(message + "\n" + instructionMessage);
+                keyPress = Console.ReadKey(true);
+
+                switch(keyPress.Key) {
+                    case ConsoleKey.Y:
+                        return true;
+                    case ConsoleKey.N:
+                        return false;
+                }
+
+                message = "Invalid input.";
+            } while(true);
+
         }
     }
 }
