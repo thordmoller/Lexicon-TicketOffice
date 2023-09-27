@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,12 +11,6 @@ namespace TicketOfficeAssignment
     public static class TicketOffice
     {
         private static Customer customer;
-        private enum AgeCategory
-        {
-            Child,
-            Adult,
-            Senior
-        }
 
         //static constructor is initiated when class is first used
         static TicketOffice() {
@@ -24,25 +19,36 @@ namespace TicketOfficeAssignment
 
             customer = new Customer(customerAge, customerTicket);
 
-            Console.WriteLine(GetAgeCategory(customerAge).ToString());
+            WriteLine(PriceSetter(customerAge, customer.getTicketToString()));
         }
 
         public static int PriceSetter(int age, string place) {
 
+            int price = 0;
 
-            return 1;
-        }
-
-        private static AgeCategory GetAgeCategory(int age) {
             if(Customer.isValidAge(age)) {
-                if(age < 12)
-                    return AgeCategory.Child;
-                if(age > 11 && age < 65)
-                    return AgeCategory.Adult;
-                if(age > 64)
-                    return AgeCategory.Senior;
+
+                if(age < 12) {
+                    if(place == "Seated")
+                        price = 50;
+                    else
+                        price = 25;
+                }
+                else if(age > 11 && age < 65) {
+                    if(place == "Seated")
+                        price = 170;
+                    else
+                        price = 110;
+                }
+                else {
+                    if(place == "Seated")
+                        price = 100;
+                    else
+                        price = 60;
+                }
             }
-            return AgeCategory.Adult;   //if all fails for some reason, adult is the default
+
+            return price;
         }
 
         public static string hej() {

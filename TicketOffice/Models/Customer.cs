@@ -47,7 +47,7 @@ namespace TicketOfficeAssignment
             return "Age: " + age + "\nTicket type: " + getTicketToString();
         }
 
-        private string getTicketToString() {
+        public string getTicketToString() {
             return isTicketSeated ? "Seated" : "Standing";
         }
     }
