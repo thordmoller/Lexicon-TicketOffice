@@ -18,10 +18,10 @@ namespace TicketOfficeAssignment
         {
             get { return age; }
             set {
-                if(isAgeValid(value))
+                if(isValidAge(value))   //we only set a value if the age is valid
                     age = value;
                 else
-                    throw new ArgumentException("Age must be a value between 0 and 120");
+                    throw new ArgumentException("Age must be a value between 0 and 120");   //invalid age. Abort object creation. Only happens in worst case scenario if somoene creates the object wrong
             }
         }
         public bool IsTicketSeated
@@ -36,20 +36,19 @@ namespace TicketOfficeAssignment
             IsTicketSeated = isTicketSeated;
         }
 
-        //making a string out of this objects fields, for convenient console output
-        public string toString() {
-            return "Age: " + age + "\nTicket type: " + getTicketToString();
-        }
-
-        private bool isAgeValid(int ageToValidate) {
+        public static bool isValidAge(int ageToValidate) {
             if(ageToValidate >= 0 && ageToValidate <= 120)  //only validate ages between 0 and 120
                 return true;
             return false;
         }
 
+        //making a string out of this objects fields, for convenient console output
+        public string toString() {
+            return "Age: " + age + "\nTicket type: " + getTicketToString();
+        }
+
         private string getTicketToString() {
             return isTicketSeated ? "Seated" : "Standing";
         }
-
     }
 }
