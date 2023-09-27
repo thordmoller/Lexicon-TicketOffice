@@ -13,27 +13,24 @@ namespace TicketOfficeAssignment
         private int age;
         private bool isTicketSeated;
 
-        //public getters and setters for outside access
+        //public getters for outside access
         public int Age
         {
             get { return age; }
-            set {
-                if(isValidAge(value))   //we only set a value if the age is valid
-                    age = value;
-                else
-                    throw new ArgumentException("Age must be a value between 0 and 120");   //invalid age. Abort object creation. Only happens in worst case scenario if somoene creates the object wrong
-            }
         }
         public bool IsTicketSeated
         {
             get { return isTicketSeated; }
-            set { isTicketSeated = value; }
         }
 
         //constructor. Set fields when creating the object
         public Customer(int age, bool isTicketSeated) {
-            Age = age;
-            IsTicketSeated = isTicketSeated;
+            if(isValidAge(age))
+                this.age = age;
+            else
+                throw new ArgumentException("Age must be a value between 0 and 120");   //invalid age. Abort object creation. Only happens in worst case scenario if somoene creates the object wrong
+
+            this.isTicketSeated = isTicketSeated;
         }
 
         public static bool isValidAge(int ageToValidate) {
@@ -43,7 +40,7 @@ namespace TicketOfficeAssignment
         }
 
         //making a string out of this objects fields, for convenient console output
-        public string toString() {
+        public string ToString() {
             return "Age: " + age + "\nTicket type: " + getTicketToString();
         }
 

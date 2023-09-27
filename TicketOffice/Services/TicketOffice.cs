@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Numerics;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
@@ -13,6 +15,16 @@ namespace TicketOfficeAssignment
     {
         private static Customer customer;
         private static int price;
+        private static Random random = new Random();
+
+        public static int Price
+        {
+            get { return price; }
+        }
+        public static Customer Customer
+        {
+            get { return customer; }
+        }
 
         //static constructor is initiated when class is first used
         static TicketOffice() {
@@ -57,8 +69,10 @@ namespace TicketOfficeAssignment
             return (1 - 1 / taxRate) * price;
         }
 
-        public static string hej() {
-            return "hej";
+        private static int TicketNumberGenerator() {
+
+            return random.Next(1, 8000);
         }
+
     }
 }

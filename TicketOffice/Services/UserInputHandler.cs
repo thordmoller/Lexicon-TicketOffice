@@ -14,7 +14,9 @@ namespace TicketOfficeAssignment
 
             WriteLine(welcomeMessage);
 
-            WriteLine(new Customer(getAgeFromUser(), userPrefSeated()).toString());
+            WriteLine(TicketOffice.Customer.ToString());
+            WriteLine("price: " + TicketOffice.Price);
+            WriteLine("Tax: " + TicketOffice.TaxCalculator(TicketOffice.Price));
         }
 
         public static int getAgeFromUser() {
