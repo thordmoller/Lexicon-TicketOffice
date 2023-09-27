@@ -17,7 +17,7 @@ namespace TicketOfficeAssignment
             WriteLine(new Customer(getAgeFromUser(), userPrefSeated()).toString());
         }
 
-        private static int getAgeFromUser() {
+        public static int getAgeFromUser() {
 
             string message = "Please specify your age";
 
@@ -45,14 +45,14 @@ namespace TicketOfficeAssignment
         }
 
         //returns true if the user perfers a seated ticket
-        private static bool userPrefSeated() {
+        public static bool userPrefSeated() {
 
             string message = "Would you like a seated ticket?";
-            string instructionMessage = "type 'y' for a seated ticket or 'n' for a standing ticket";
+            string instructionMessage = "press 'y' for a seated ticket or 'n' for a standing ticket";
 
             ConsoleKeyInfo keyPress;
 
-            do {
+            while(true) {
                 WriteLine(message + "\n" + instructionMessage);
                 keyPress = Console.ReadKey(true);
 
@@ -64,8 +64,7 @@ namespace TicketOfficeAssignment
                 }
 
                 message = "Invalid input.";
-            } while(true);
-
+            }
         }
     }
 }
