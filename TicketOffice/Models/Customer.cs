@@ -12,6 +12,7 @@ namespace TicketOfficeAssignment
         //fields to be used only within this class
         private int age;
         private bool isTicketSeated;
+        private int ticketNumber;
 
         //public getters for outside access
         public int Age
@@ -22,15 +23,20 @@ namespace TicketOfficeAssignment
         {
             get { return isTicketSeated; }
         }
+        public int TicketNumber
+        {
+            get { return ticketNumber; }
+        }
 
         //constructor. Set fields when creating the object
-        public Customer(int age, bool isTicketSeated) {
+        public Customer(int age, bool isTicketSeated, int ticketNumber) {
             if(isValidAge(age))
                 this.age = age;
             else
                 throw new ArgumentException("Age must be a value between 0 and 120");   //invalid age. Abort object creation. Only happens in worst case scenario if somoene creates the object wrong
 
             this.isTicketSeated = isTicketSeated;
+            this.ticketNumber = ticketNumber;
         }
 
         public static bool isValidAge(int ageToValidate) {

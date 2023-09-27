@@ -30,8 +30,9 @@ namespace TicketOfficeAssignment
         static TicketOffice() {
             int customerAge = UserInputHandler.getAgeFromUser();
             bool customerTicket = UserInputHandler.userPrefSeated();
+            int ticketNumber = TicketNumberGenerator();
 
-            customer = new Customer(customerAge, customerTicket);
+            customer = new Customer(customerAge, customerTicket, ticketNumber);
             price = PriceSetter(customer.Age, customer.getTicketToString());
 
         }

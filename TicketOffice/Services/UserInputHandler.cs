@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Console;
@@ -12,11 +13,56 @@ namespace TicketOfficeAssignment
         public static void getUserInput() {
             string welcomeMessage = "Welcome to the Ticket Office!";
 
+            string list = ",34,1003,389,4100,4890,7233,2855,";
+
+            WriteLine(AddPlace(list, 35));
+
             WriteLine(welcomeMessage);
 
             WriteLine(TicketOffice.Customer.ToString());
             WriteLine("price: " + TicketOffice.Price);
             WriteLine("Tax: " + TicketOffice.TaxCalculator(TicketOffice.Price));
+        }
+
+        public static string AddPlace(string placeList, int placeNumber) {
+
+            if(CheckPlaceAvailability(placeList, placeNumber) && isValidListFormat(placeList)) {
+                placeList += placeNumber + ",";
+            }
+
+            return placeList;
+        }
+
+        private static bool isValidListFormat(string placeList) {
+
+            if(!placeList.StartsWith(",") || !placeList.EndsWith(","))
+                return false;
+
+            placeList = placeList.Trim(',');
+            string[] numbers = placeList.Split(',');
+            foreach(string number in numbers) {
+                if(!int.TryParse(number, out int intNumber)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public static bool CheckPlaceAvailability(string placeList, int placeNumber) {
+
+            string search = "," + placeNumber.ToString() + ",";
+
+            if(isValidPlaceNumber(placeNumber))
+                if(!placeList.Contains(search))
+                    return true;
+
+            return false;
+        }
+
+        private static bool isValidPlaceNumber(int placeNumber) {
+            if(placeNumber >= 1 && placeNumber <= 8000)
+                return true;
+            return false;
         }
 
         public static int getAgeFromUser() {
