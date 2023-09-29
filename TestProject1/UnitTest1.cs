@@ -29,7 +29,6 @@ namespace TestProject1
 
                 decimal tax = TicketOffice.TaxCalculator(price);
 
-                // Assert
                 Assert.Equal(expectedTax, tax, 2); // Check up to 2 decimal places
             }
         }
@@ -42,10 +41,9 @@ namespace TestProject1
             [InlineData(",34,1003,389,4100,4890,7233,2855,", 9999, false)]  //number out of range
             [InlineData(",", 1, true)] // Empty list
             public void CheckPlaceAvailability(string placeList, int placeNumber, bool expectedAvailability) {
-                // Act
+
                 bool isAvailable = ReservationManager.CheckPlaceAvailability(placeList, placeNumber);
 
-                // Assert
                 Assert.Equal(expectedAvailability, isAvailable);
             }
 
