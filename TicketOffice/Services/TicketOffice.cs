@@ -1,47 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Console;
 
 namespace TicketOfficeAssignment
 {
     public static class TicketOffice
     {
-        private static Customer customer;
-        private static int price;
-        private static Random random = new Random();
+        private static Random random = new Random();    //random is a private field because i read that a new random object shouldnt be created everytime a random number is created
+                                                        //This way the Random object remains the same as long as the program isnt restarted and can generate new numbers
+        /// <summary>
+        /// The programs entrypoint
+        /// </summary>
+        public static void Initiate() {
 
-        public static int Price
-        {
-            get { return price; }
-        }
-        public static Customer Customer
-        {
-            get { return customer; }
-        }
+            UserInputHandler.DisplayWelcomeMessage();
 
-        //static constructor is initiated when class is first used
-        static TicketOffice() {
-            int customerAge = UserInputHandler.getAgeFromUser();
-            bool customerTicket = UserInputHandler.userPrefSeated();
+            Customer customer = CreateCustomer();
+
+            int price = PriceSetter(customer.Age, customer.GetTicketToString());
+            decimal tax = TaxCalculator(price);
+
+            UserInputHandler.DisplaySummary(customer, price, tax);
+            UserInputHandler.EndChoice();
+
+        }
+        /// <summary>
+        /// creates customer object and gathers user input doing it
+        /// </summary>
+        public static Customer CreateCustomer() {
+
+            int customerAge = UserInputHandler.GetCustomerAge();
+            bool customerTicket = UserInputHandler.UserPrefSeated();
             int ticketNumber = TicketNumberGenerator();
 
-            customer = new Customer(customerAge, customerTicket, ticketNumber);
-            price = PriceSetter(customer.Age, customer.getTicketToString());
+            Customer customer = new Customer(customerAge, customerTicket, ticketNumber);
 
+            ReservationManager.AddPlace(ticketNumber);
+
+            return customer;
         }
 
         public static int PriceSetter(int age, string place) {
 
             int price = 0;
 
-            if(Customer.isValidAge(age)) {
+            if(Customer.IsValidAge(age)) {
 
                 if(age < 12) {
                     if(place == "Seated")
@@ -74,6 +84,5 @@ namespace TicketOfficeAssignment
 
             return random.Next(1, 8000);
         }
-
     }
 }

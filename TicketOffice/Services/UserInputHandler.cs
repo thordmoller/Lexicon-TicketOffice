@@ -1,71 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using static System.Console;
 
 namespace TicketOfficeAssignment
 {
+
+    /// <summary>
+    /// This is a class that handles all the console or user input related methods of the program, to keep it separated from other functional methods.
+    /// The program is initiated when a method from the static TicketOffice class is used.
+    /// This initiates the constructor of TicketOffice which in turn calls methods from UserInputHandler (this) class to start receiving input from the user
+    /// </summary>
+    /// 
     public static class UserInputHandler
     {
-        public static void getUserInput() {
-            string welcomeMessage = "Welcome to the Ticket Office!";
+        /// <summary>
+        /// I already implemented this method before the third assignment was released. That's why i have solved it in a different way than the assignment wants.
+        /// But i think it returns the correct result. It's not handling chars, but it effectively accepts only integers between 0 and 120
+        /// </summary>
+        /// <returns></returns>
 
-            string list = ",34,1003,389,4100,4890,7233,2855,";
-
-            WriteLine(AddPlace(list, 35));
-
-            WriteLine(welcomeMessage);
-
-            WriteLine(TicketOffice.Customer.ToString());
-            WriteLine("price: " + TicketOffice.Price);
-            WriteLine("Tax: " + TicketOffice.TaxCalculator(TicketOffice.Price));
-        }
-
-        public static string AddPlace(string placeList, int placeNumber) {
-
-            if(CheckPlaceAvailability(placeList, placeNumber) && isValidListFormat(placeList)) {
-                placeList += placeNumber + ",";
-            }
-
-            return placeList;
-        }
-
-        private static bool isValidListFormat(string placeList) {
-
-            if(!placeList.StartsWith(",") || !placeList.EndsWith(","))
-                return false;
-
-            placeList = placeList.Trim(',');
-            string[] numbers = placeList.Split(',');
-            foreach(string number in numbers) {
-                if(!int.TryParse(number, out int intNumber)) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public static bool CheckPlaceAvailability(string placeList, int placeNumber) {
-
-            string search = "," + placeNumber.ToString() + ",";
-
-            if(isValidPlaceNumber(placeNumber))
-                if(!placeList.Contains(search))
-                    return true;
-
-            return false;
-        }
-
-        private static bool isValidPlaceNumber(int placeNumber) {
-            if(placeNumber >= 1 && placeNumber <= 8000)
-                return true;
-            return false;
-        }
-
-        public static int getAgeFromUser() {
+        public static int GetCustomerAge() {
 
             string message = "Please specify your age";
 
@@ -77,32 +38,49 @@ namespace TicketOfficeAssignment
                 userInput = ReadLine();
                 message = "Invalid input. Please enter a number between 0 and 120";
 
-            } while(!isValidAgeInput(userInput, out age));  //loop continues as long as the input is invalid age
+            } while(!IsValidAgeInput(userInput, out age));  //loop continues as long as the input is invalid age
 
             return age;
         }
 
-        //Extra check to see if the input age is a valid int while also reusing the isValidAge method from Customer class.
-        private static bool isValidAgeInput(string? inputAge, out int age) {
+        /// <summary>
+        /// Extra check to see if the input age is a valid int while also reusing the IsValidAge method from Customer class.
+        /// </summary>
+        /// <param name="inputAge"></param>
+        /// <param name="age">Age is an output integer additional to the returned bool</param>
+        /// <returns></returns>
+        private static bool IsValidAgeInput(string? inputAge, out int age) {
 
             if(int.TryParse(inputAge, out age)) {
-                if(Customer.isValidAge(age))
+                if(Customer.IsValidAge(age))
                     return true;
             }
             return false;
         }
 
-        //returns true if the user perfers a seated ticket
-        public static bool userPrefSeated() {
+        /// <summary>
+        /// I already made the UserPrefSeated() method before the assignment was released, which does the same thing except it returns a boolean for simplicity.
+        /// So this method reuses that one and returns a string based on the boolean.
+        /// I'm not using it myself, because i think it would result in the need of more error handling, having to valitade the strings every time the ticket is checked. But the method should work
+        /// My original solution is to have a ToString() method in the Customer class that converts the boolean attatched to the object on request.
+        /// </summary>
+        /// 
+        public static string GetCustomerPlacePreference() {
 
-            string message = "Would you like a seated ticket?";
+            return UserPrefSeated() ? "Seated" : "Standing";
+        }
+
+        /// <returns>True if the user prefers a seated ticket</returns>
+        public static bool UserPrefSeated() {
+
+            string message = "\nWould you like a seated ticket?";
             string instructionMessage = "press 'y' for a seated ticket or 'n' for a standing ticket";
 
             ConsoleKeyInfo keyPress;
 
             while(true) {
                 WriteLine(message + "\n" + instructionMessage);
-                keyPress = Console.ReadKey(true);
+                keyPress = ReadKey(true);
 
                 switch(keyPress.Key) {
                     case ConsoleKey.Y:
@@ -110,9 +88,73 @@ namespace TicketOfficeAssignment
                     case ConsoleKey.N:
                         return false;
                 }
-
-                message = "Invalid input.";
+                message = "Invalid input.";     //if the loop ever runs twice, it means an error occured so the message is changed
             }
+        }
+
+        /// <summary>
+        /// After a customer is handled the user gets a choice to enter a new customer, display the reservation list or quit
+        /// </summary>
+        public static void EndChoice() {
+
+            string message = "Thank you for using the TicketOffice! Please decide what happens next: \n";
+            string instructionMessage = "For new new customer: press 'n'. To list reserved places: press l. Or to quit: press q";
+
+            ConsoleKeyInfo keyPress;
+
+            bool choiceMade = false;
+            while(!choiceMade) {
+                WriteLine(message + "\n" + instructionMessage);
+                keyPress = ReadKey(true);
+
+                switch(keyPress.Key) {
+                    case ConsoleKey.L:
+                        DisplayReservationList();
+                        EndChoice();
+                        choiceMade = true;
+                        break;
+                    case ConsoleKey.N:
+                        TicketOffice.Initiate();
+                        choiceMade = true;
+                        break;
+                    case ConsoleKey.Q:
+                        Environment.Exit(0);
+                        choiceMade = true;
+                        break;
+                }
+
+                message = "Invalid input.";     //if the loop ever runs twice, it means an error occured so the message is changed
+            }
+        }
+
+        public static void DisplayWelcomeMessage() {
+
+            PrintBlock("Welcome to the Ticket Office!");
+        }
+
+        /// <summary>
+        /// Summarizing the details about the customer and the purchase
+        /// </summary>
+        public static void DisplaySummary(Customer customer, int price, decimal tax) {
+            PrintBlock("\nSummary:");
+            WriteLine(customer.ToString());
+            DisplayPrice(price, tax);
+        }
+
+        public static void DisplayPrice(int price, decimal tax) {
+
+            PrintBlock("price: " + price + " (Tax: " + tax.ToString("F2") + ")");
+        }
+
+        public static void DisplayReservationList() {
+            PrintBlock(ReservationManager.ReservationList);
+        }
+
+        /// <summary>
+        /// only adds a new line to the writeline method for convenience to print more readable blocks
+        /// </summary>
+        private static void PrintBlock(string message) {
+            WriteLine(message + "\n");
         }
     }
 }
