@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static TicketOfficeAssignment.TicketType;
 
 namespace TicketOfficeAssignment
 {
@@ -47,26 +48,32 @@ namespace TicketOfficeAssignment
             return customer;
         }
 
-        public static int PriceSetter(int age, string place) {
+        /// <summary>
+        /// Sets the ticket price based on the customers age and ticket type
+        /// </summary>
+        /// <param name="age"></param>
+        /// <param name="place"></param>
+        /// <returns>ticket price</returns>
+        public static int PriceSetter(int age, TicketType place) {
 
             int price = 0;
 
             if(Customer.IsValidAge(age)) {
 
                 if(age < 12) {
-                    if(place == "Seated")
+                    if(place == Seated)
                         price = 50;
                     else
                         price = 25;
                 }
                 else if(age > 11 && age < 65) {
-                    if(place == "Seated")
+                    if(place == Seated)
                         price = 170;
                     else
                         price = 110;
                 }
                 else {
-                    if(place == "Seated")
+                    if(place == Seated)
                         price = 100;
                     else
                         price = 60;
