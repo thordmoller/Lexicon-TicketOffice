@@ -8,9 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using static System.Console;
+using static TicketOfficeAssignment.TicketType;
 
 namespace TicketOfficeAssignment
 {
+    public enum TicketType
+    {
+        Seated,
+        Standing
+    }
 
     /// <summary>
     /// This is a class that handles all the console or user input related methods of the program, to keep it separated from other functional methods.
@@ -61,13 +67,11 @@ namespace TicketOfficeAssignment
         /// <summary>
         /// I already made the UserPrefSeated() method before the assignment was released, which does the same thing except it returns a boolean for simplicity.
         /// So this method reuses that one and returns a string based on the boolean.
-        /// I'm not using it myself, because i think it would result in the need of more error handling, having to valitade the strings every time the ticket is checked. But the method should work
-        /// My original solution is to have a ToString() method in the Customer class that converts the boolean attatched to the object on request.
         /// </summary>
-        /// 
-        public static string GetCustomerPlacePreference() {
+        /// <returns>TicketType Seated or Standing</returns>
+        public static TicketType GetCustomerPlacePreference() {
 
-            return UserPrefSeated() ? "Seated" : "Standing";
+            return UserPrefSeated() ? Seated : Standing;
         }
 
         /// <returns>True if the user prefers a seated ticket</returns>
