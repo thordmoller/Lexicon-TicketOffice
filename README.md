@@ -1,5 +1,5 @@
 # Ticket Office Assignment week 39
-**This version of the ticket office can be found under version "1.0" under releases. The solution contains 4 different classes**
+**The solution contains 4 different classes**
 ### TicketOffice
 This class is responsible for handling all the other classes. Its Initiate() method initiates the whole program and is called from the Program main method. It then starts by creating a customer with inputvalues gathered from methods of the UserInputHandler class. It also generates a place number, determines the price for the customer and sets a place number. It then finally calls methods from the ReservationManager class to store and validate that number.
 ### UserInputHandler
