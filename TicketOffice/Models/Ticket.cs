@@ -95,13 +95,7 @@ namespace TicketOfficeAssignment
         //making a string out of this objects fields, for convenient console output. Overriding the original ToString()
         public override string ToString() {
 
-            return "Age: " + age + "\nTicket type: " + GetTicketToString();
-        }
-
-        //converting the decided ticket boolean to a string
-        public string GetTicketToString() {
-
-            return place.ToString();
+            return "Age: " + age + "\nTicket type: " + place.ToString();
         }
     }
 }

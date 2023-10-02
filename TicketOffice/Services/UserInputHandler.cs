@@ -129,10 +129,10 @@ namespace TicketOfficeAssignment
         /// <summary>
         /// Summarizing the details about the customer and the purchase
         /// </summary>
-        public static void DisplaySummary(Ticket customer, int price, decimal tax) {
+        public static void DisplaySummary(Ticket ticket) {
             PrintBlock("\nSummary:");
-            WriteLine(customer.ToString());
-            DisplayPrice(price, tax);
+            WriteLine(ticket.ToString());
+            DisplayPrice(ticket.Price(), ticket.Tax());
         }
 
         public static void DisplayPrice(int price, decimal tax) {
