@@ -25,10 +25,10 @@ namespace TicketOfficeAssignment
 
             Ticket customer = CreateCustomer();
 
-            int price = PriceSetter(customer.Age, customer.GetTicketToString());
-            decimal tax = TaxCalculator(price);
+            //int price = PriceSetter(customer.Age, customer.GetTicketToString());
+            //decimal tax = TaxCalculator(price);
 
-            UserInputHandler.DisplaySummary(customer, price, tax);
+            //UserInputHandler.DisplaySummary(customer, price, tax);
             UserInputHandler.EndChoice();
 
         }
@@ -38,10 +38,10 @@ namespace TicketOfficeAssignment
         public static Ticket CreateCustomer() {
 
             int customerAge = UserInputHandler.GetCustomerAge();
-            bool customerTicket = UserInputHandler.UserPrefSeated();
+            TicketType customerTicket = UserInputHandler.GetCustomerPlacePreference();
             int ticketNumber = TicketNumberGenerator();
 
-            Ticket customer = new Ticket(customerAge, customerTicket, ticketNumber);
+            Ticket customer = new Ticket(customerAge, customerTicket);
 
             ReservationManager.AddPlace(ticketNumber);
 

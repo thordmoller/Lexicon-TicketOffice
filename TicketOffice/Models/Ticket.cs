@@ -51,7 +51,7 @@ namespace TicketOfficeAssignment
         /// <param name="age"></param>
         /// <param name="place"></param>
         /// <returns>ticket price</returns>
-        private int Price() {
+        public int Price() {
 
             int price = 0;
 
@@ -80,7 +80,7 @@ namespace TicketOfficeAssignment
             return price;
         }
 
-        private decimal Tax() {
+        public decimal Tax() {
             decimal taxRate = Convert.ToDecimal(1.06);
             return (1 - 1 / taxRate) * Price();
         }

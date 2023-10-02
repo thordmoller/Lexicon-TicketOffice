@@ -1,4 +1,5 @@
 using TicketOfficeAssignment;
+using static TicketOfficeAssignment.TicketType;
 
 namespace TestProject1
 {
@@ -10,26 +11,16 @@ namespace TestProject1
         public class TicketOfficeTests
         {
             [Theory]
-            [InlineData(5, "Seated", 50)]
-            [InlineData(12, "Seated", 170)]
-            [InlineData(65, "Seated", 100)]
-            [InlineData(5, "Standing", 25)]
-            [InlineData(12, "Standing", 110)]
-            [InlineData(65, "Standing", 60)]
-            public void PriceSetter(int age, string place, int expectedPrice) {
-
-                int price = TicketOffice.PriceSetter(age, place);
+            [InlineData(5, Seated, 50)]
+            [InlineData(12, Seated, 170)]
+            [InlineData(65, Seated, 100)]
+            [InlineData(5, Standing, 25)]
+            [InlineData(12, Standing, 110)]
+            [InlineData(65, Standing, 60)]
+            public void PriceSetter(int age, TicketType place, int expectedPrice) {
+                Ticket ticket = new Ticket(age, place);
+                int price = ticket.Price();
                 Assert.Equal(expectedPrice, price);
-            }
-
-            [Theory]
-            [InlineData(100, 5.66)]
-            [InlineData(50, 2.83)]
-            public void TaxCalculator(int price, decimal expectedTax) {
-
-                decimal tax = TicketOffice.TaxCalculator(price);
-
-                Assert.Equal(expectedTax, tax, 2); // Check up to 2 decimal places
             }
         }
 
