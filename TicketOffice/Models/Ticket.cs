@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static TicketOfficeAssignment.TicketType;
 
 namespace TicketOfficeAssignment
 {
@@ -42,6 +43,41 @@ namespace TicketOfficeAssignment
 
             this.place = place;
             number = TicketOffice.TicketNumberGenerator();
+        }
+
+        /// <summary>
+        /// Sets the ticket price based on the customers age and ticket type
+        /// </summary>
+        /// <param name="age"></param>
+        /// <param name="place"></param>
+        /// <returns>ticket price</returns>
+        private int Price() {
+
+            int price = 0;
+
+            if(IsValidAge(age)) {
+
+                if(age < 12) {
+                    if(place == Seated)
+                        price = 50;
+                    else
+                        price = 25;
+                }
+                else if(age > 11 && age < 65) {
+                    if(place == Seated)
+                        price = 170;
+                    else
+                        price = 110;
+                }
+                else {
+                    if(place == Seated)
+                        price = 100;
+                    else
+                        price = 60;
+                }
+            }
+
+            return price;
         }
 
         public static bool IsValidAge(int ageToValidate) {

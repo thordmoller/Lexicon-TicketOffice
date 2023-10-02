@@ -23,7 +23,7 @@ namespace TicketOfficeAssignment
 
             UserInputHandler.DisplayWelcomeMessage();
 
-            Customer customer = CreateCustomer();
+            Ticket customer = CreateCustomer();
 
             int price = PriceSetter(customer.Age, customer.GetTicketToString());
             decimal tax = TaxCalculator(price);
@@ -35,59 +35,25 @@ namespace TicketOfficeAssignment
         /// <summary>
         /// creates customer object and gathers user input doing it
         /// </summary>
-        public static Customer CreateCustomer() {
+        public static Ticket CreateCustomer() {
 
             int customerAge = UserInputHandler.GetCustomerAge();
             bool customerTicket = UserInputHandler.UserPrefSeated();
             int ticketNumber = TicketNumberGenerator();
 
-            Customer customer = new Customer(customerAge, customerTicket, ticketNumber);
+            Ticket customer = new Ticket(customerAge, customerTicket, ticketNumber);
 
             ReservationManager.AddPlace(ticketNumber);
 
             return customer;
         }
 
-        /// <summary>
-        /// Sets the ticket price based on the customers age and ticket type
-        /// </summary>
-        /// <param name="age"></param>
-        /// <param name="place"></param>
-        /// <returns>ticket price</returns>
-        public static int PriceSetter(int age, TicketType place) {
-
-            int price = 0;
-
-            if(Customer.IsValidAge(age)) {
-
-                if(age < 12) {
-                    if(place == Seated)
-                        price = 50;
-                    else
-                        price = 25;
-                }
-                else if(age > 11 && age < 65) {
-                    if(place == Seated)
-                        price = 170;
-                    else
-                        price = 110;
-                }
-                else {
-                    if(place == Seated)
-                        price = 100;
-                    else
-                        price = 60;
-                }
-            }
-
-            return price;
-        }
         public static decimal TaxCalculator(int price) {
             decimal taxRate = Convert.ToDecimal(1.06);
             return (1 - 1 / taxRate) * price;
         }
 
-        private static int TicketNumberGenerator() {
+        public static int TicketNumberGenerator() {
 
             return random.Next(1, 8000);
         }

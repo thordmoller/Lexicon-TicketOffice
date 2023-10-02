@@ -50,7 +50,7 @@ namespace TicketOfficeAssignment
         }
 
         /// <summary>
-        /// Extra check to see if the input age is a valid int while also reusing the IsValidAge method from Customer class.
+        /// Extra check to see if the input age is a valid int while also reusing the IsValidAge method from Ticket class.
         /// </summary>
         /// <param name="inputAge"></param>
         /// <param name="age">Age is an output integer additional to the returned bool</param>
@@ -58,7 +58,7 @@ namespace TicketOfficeAssignment
         private static bool IsValidAgeInput(string? inputAge, out int age) {
 
             if(int.TryParse(inputAge, out age)) {
-                if(Customer.IsValidAge(age))
+                if(Ticket.IsValidAge(age))
                     return true;
             }
             return false;
@@ -139,7 +139,7 @@ namespace TicketOfficeAssignment
         /// <summary>
         /// Summarizing the details about the customer and the purchase
         /// </summary>
-        public static void DisplaySummary(Customer customer, int price, decimal tax) {
+        public static void DisplaySummary(Ticket customer, int price, decimal tax) {
             PrintBlock("\nSummary:");
             WriteLine(customer.ToString());
             DisplayPrice(price, tax);
