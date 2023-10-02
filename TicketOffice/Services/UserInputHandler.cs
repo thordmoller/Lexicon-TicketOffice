@@ -64,16 +64,6 @@ namespace TicketOfficeAssignment
             return false;
         }
 
-        /// <summary>
-        /// I already made the UserPrefSeated() method before the assignment was released, which does the same thing except it returns a boolean for simplicity.
-        /// So this method reuses that one and returns a string based on the boolean.
-        /// </summary>
-        /// <returns>TicketType Seated or Standing</returns>
-        public static TicketType GetCustomerPlacePreference() {
-
-            return UserPrefSeated() ? Seated : Standing;
-        }
-
         /// <returns>True if the user prefers a seated ticket</returns>
         public static bool UserPrefSeated() {
 

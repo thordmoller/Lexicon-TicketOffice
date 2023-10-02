@@ -23,9 +23,9 @@ namespace TicketOfficeAssignment
 
             UserInputHandler.DisplayWelcomeMessage();
 
-            Ticket customer = CreateCustomer();
+            Ticket ticket = NewTicket();
 
-            //int price = PriceSetter(customer.Age, customer.GetTicketToString());
+            int price = PriceSetter(customer.Age, customer.GetTicketToString());
             //decimal tax = TaxCalculator(price);
 
             //UserInputHandler.DisplaySummary(customer, price, tax);
@@ -35,7 +35,7 @@ namespace TicketOfficeAssignment
         /// <summary>
         /// creates customer object and gathers user input doing it
         /// </summary>
-        public static Ticket CreateCustomer() {
+        public static Ticket NewTicket() {
 
             int customerAge = UserInputHandler.GetCustomerAge();
             TicketType customerTicket = UserInputHandler.GetCustomerPlacePreference();
@@ -46,6 +46,15 @@ namespace TicketOfficeAssignment
             ReservationManager.AddPlace(ticketNumber);
 
             return customer;
+        }
+
+        /// <summary>
+        /// Gets the customer place preference by calling a method from UserInputHandler and converting the bool to enum
+        /// </summary>
+        /// <returns>TicketType Seated or Standing</returns>
+        public static TicketType GetCustomerPlacePreference() {
+
+            return UserInputHandler.UserPrefSeated() ? Seated : Standing;
         }
 
         public static int TicketNumberGenerator() {
