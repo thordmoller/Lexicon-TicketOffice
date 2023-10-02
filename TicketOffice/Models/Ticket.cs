@@ -9,43 +9,39 @@ namespace TicketOfficeAssignment
 {
 
     /// <summary>
-    /// This is a class that can be used as an object, representing a Customer in the Ticket Office.
-    /// I realize this is way out of the scope of where we are in the course so far- 
-    /// and some of this classes features are not directly optimal right now, because of the way the assignment methods were instructed. I was a little too quick to notice the details.
-    /// But this was the initial idea and i like to make use of the knowledge i have and practice it, to make things a little more interesting, so i decided to keep it.
-    /// I hope this is okay. I have implemented all the assignent methods as they should be either way.
+    /// This is a class that can be used as an object, representing a Ticket in the Ticket Office.
     /// </summary>
-    public class Customer
+    public class Ticket
     {
         //fields to be used only within this class
         private int age;
-        private bool isTicketSeated;
-        private int ticketNumber;
+        private TicketType place;   //enum TicketType
+        private int number;
 
         //public getters for outside access
         public int Age
         {
             get { return age; }
         }
-        public bool IsTicketSeated
+        public TicketType Place
         {
-            get { return isTicketSeated; }
+            get { return place; }
         }
-        public int TicketNumber
+        public int Number
         {
-            get { return ticketNumber; }
+            get { return number; }
         }
 
         //constructor. Set fields when creating the object
-        public Customer(int age, bool isTicketSeated, int ticketNumber) {
+        public Ticket(int age, TicketType place) {
 
             if(IsValidAge(age))
                 this.age = age;
             else
                 throw new ArgumentException("Age must be a value between 0 and 120");   //invalid age. Abort object creation. Only happens in worst case scenario if somoene creates the object wrong
 
-            this.isTicketSeated = isTicketSeated;
-            this.ticketNumber = ticketNumber;
+            this.place = place;
+            number = TicketOffice.TicketNumberGenerator();
         }
 
         public static bool IsValidAge(int ageToValidate) {
@@ -64,7 +60,7 @@ namespace TicketOfficeAssignment
         //converting the decided ticket boolean to a string
         public string GetTicketToString() {
 
-            return isTicketSeated ? "Seated" : "Standing";
+            return place.ToString();
         }
     }
 }
