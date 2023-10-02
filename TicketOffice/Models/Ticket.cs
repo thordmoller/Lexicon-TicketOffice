@@ -80,6 +80,11 @@ namespace TicketOfficeAssignment
             return price;
         }
 
+        private decimal Tax() {
+            decimal taxRate = Convert.ToDecimal(1.06);
+            return (1 - 1 / taxRate) * Price();
+        }
+
         public static bool IsValidAge(int ageToValidate) {
 
             if(ageToValidate >= 0 && ageToValidate <= 120)  //only validate ages between 0 and 120

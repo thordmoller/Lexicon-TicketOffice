@@ -48,11 +48,6 @@ namespace TicketOfficeAssignment
             return customer;
         }
 
-        public static decimal TaxCalculator(int price) {
-            decimal taxRate = Convert.ToDecimal(1.06);
-            return (1 - 1 / taxRate) * price;
-        }
-
         public static int TicketNumberGenerator() {
 
             return random.Next(1, 8000);
