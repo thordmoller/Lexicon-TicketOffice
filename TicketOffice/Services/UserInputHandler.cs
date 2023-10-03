@@ -14,8 +14,6 @@ namespace TicketOfficeAssignment
 
     /// <summary>
     /// This is a class that handles all the console or user input related methods of the program, to keep it separated from other functional methods.
-    /// The program is initiated when a method from the static TicketOffice class is used.
-    /// This initiates the constructor of TicketOffice which in turn calls methods from UserInputHandler (this) class to start receiving input from the user
     /// </summary>
     /// 
     public static class UserInputHandler
