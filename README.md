@@ -4,8 +4,8 @@
 This class is responsible for handling all the other classes. Its Initiate() method initiates the whole program and is called from the Program main method. It then starts by creating a customer with inputvalues gathered from methods of the UserInputHandler class. Now contains a little less methods since the use of the Ticket class.
 ### UserInputHandler
 Is responsible for everything related to the console. putting out text, asking the user for input etc.
-### ReservationManager
-Responsible for keeping track of the place numbers, which it stacks in a string. It has methods for validating and adding them to the string.
+### TicketSalesManager
+Previously ReservationManager. Responsible for keeping track of the place numbers, which it stores in Ticket objects in a list. It has methods for validating and adding them to the list.
 ### Ticket
 Previously the "Customer" class. Since my initial Customer class had almost identical features as the Ticket class asked for in the assignment, i just renamed the Customer class and implemented it accordingly. Because of the extra work from last week and thinking in the same path, i didn't have to do much at all. It was already working basically.
 
