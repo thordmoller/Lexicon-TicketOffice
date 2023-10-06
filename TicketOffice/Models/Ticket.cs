@@ -17,7 +17,7 @@ namespace TicketOfficeAssignment
         //fields to be used only within this class
         private int age;
         private TicketType place;   //enum TicketType
-        private int number;
+        public int number;
 
         //public getters for outside access
         public int Age
@@ -42,7 +42,8 @@ namespace TicketOfficeAssignment
                 throw new ArgumentException("Age must be a value between 0 and 120");   //invalid age. Abort object creation. Only happens in worst case scenario if somoene creates the object wrong
 
             this.place = place;
-            number = TicketOffice.TicketNumberGenerator();
+            number = TicketSalesManager.NextTicket();
+
         }
 
         /// <summary>

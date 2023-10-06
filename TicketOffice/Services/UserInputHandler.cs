@@ -92,7 +92,7 @@ namespace TicketOfficeAssignment
         public static void EndChoice() {
 
             string message = "Thank you for using the TicketOffice! Please decide what happens next: \n";
-            string instructionMessage = "For new new customer: press 'n'. To list reserved places: press l. Or to quit: press q";
+            string instructionMessage = "For new new customer: press 'n'. To get a sales summary: press s. Or to quit: press q";
 
             ConsoleKeyInfo keyPress;
 
@@ -102,8 +102,8 @@ namespace TicketOfficeAssignment
                 keyPress = ReadKey(true);
 
                 switch(keyPress.Key) {
-                    case ConsoleKey.L:
-                        DisplayReservationList();
+                    case ConsoleKey.S:
+                        DisplaySalesSummary();
                         EndChoice();
                         choiceMade = true;
                         break;
@@ -134,6 +134,10 @@ namespace TicketOfficeAssignment
             WriteLine(ticket.ToString());
             DisplayPrice(ticket.Price(), ticket.Tax());
         }
+        public static void DisplaySalesSummary() {
+            PrintBlock("\nNumber of sold tickets: " + TicketSalesManager.AmountOfTickets());
+            PrintBlock("Total sales income: " + TicketSalesManager.SalesTotal());
+        }
 
         public static void DisplayPrice(int price, decimal tax) {
 
@@ -141,7 +145,8 @@ namespace TicketOfficeAssignment
         }
 
         public static void DisplayReservationList() {
-            PrintBlock(ReservationManager.ReservationList);
+            foreach(Ticket ticket in TicketSalesManager.Tickets)
+                Console.WriteLine(ticket.Number + "\n");
         }
 
         /// <summary>
