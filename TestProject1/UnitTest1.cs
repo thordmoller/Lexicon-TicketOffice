@@ -24,40 +24,58 @@ namespace TestProject1
             }
         }
 
-        public class ReservationManagerTests
+        public class TicketSalesManagerTests
         {
+            [Fact]
+            public void AddTicket() {
 
-            [Theory]
-            [InlineData(",34,1003,389,4100,4890,7233,2855,", 7233, false)]  //exists in list
-            [InlineData(",34,1003,389,4100,4890,7233,2855,", 9999, false)]  //number out of range
-            [InlineData(",", 1, true)] // Empty list
-            public void CheckPlaceAvailability(string placeList, int placeNumber, bool expectedAvailability) {
+                Ticket ticket = new Ticket(27, Standing);
+                TicketSalesManager.AddTicket(ticket);
 
-                bool isAvailable = ReservationManager.CheckPlaceAvailability(placeList, placeNumber);
+                Assert.Equal(1, TicketSalesManager.AmountOfTickets()); //checks if the list is empty
+                Assert.Equal(TicketSalesManager.Tickets[0].number, ticket.number); //checks that the created ticket is in the list and has the same number
+            }
+            /// <summary>
+            /// tests that method returns null if trying to add the same ticket twice. This uses the AddTicket method but actually tests the Checkavailability
+            /// </summary>
+            [Fact]
+            public void CheckAvailability() {
+                TicketSalesManager.Tickets.Clear();
 
-                Assert.Equal(expectedAvailability, isAvailable);
+                Ticket ticket = new Ticket(27, Standing);
+                TicketSalesManager.AddTicket(ticket);
+
+                Assert.Null(TicketSalesManager.AddTicket(ticket));
+                CheckAmount(1);
             }
 
-            [Theory]
-            [InlineData(",34,1003,389,4100,4890,7233,2855,", 7777, ",34,1003,389,4100,4890,7233,2855,7777,")]
-            [InlineData(",", 999, ",999,")] // Adding to an empty list
-            [InlineData("", 123, ",123,")] // Adding to an empty string
-            public void AddPlace(string placeList, int placeNumber, string expectedExpandedList) {
+            private void CheckAmount(int expected) {
+                Assert.Equal(expected, TicketSalesManager.AmountOfTickets());
+            }
 
-                string expandedList = ReservationManager.AddPlace(placeList, placeNumber);
+            //remove object
+            [Fact]
+            public void remove() {
+                TicketSalesManager.Tickets.Clear();
+                Ticket ticket = new Ticket(7, Seated);
+                TicketSalesManager.AddTicket(ticket);
 
-                Assert.Equal(expectedExpandedList, expandedList);
+                Ticket ticketToRemove = TicketSalesManager.Tickets.First();
+                Assert.True(TicketSalesManager.RemoveTicket(ticketToRemove));
+                Assert.DoesNotContain(ticketToRemove, TicketSalesManager.Tickets);
+
+                Assert.Equal(0, TicketSalesManager.AmountOfTickets());
             }
 
             [Fact]
-            public void AddPlace_Overflow() {
-                string initialList = ",34,1003,";
-                int placeNumber = 789;
-                string expectedExpandedList = ",34,1003,789,";
+            public void SalesTotal() {
+                TicketSalesManager.Tickets.Clear();
+                TicketSalesManager.AddTicket(new Ticket(7, Seated));
+                TicketSalesManager.AddTicket(new Ticket(48, Standing));
+                TicketSalesManager.AddTicket(new Ticket(98, Seated));
+                TicketSalesManager.AddTicket(new Ticket(27, Standing));
 
-                string updatedList = ReservationManager.AddPlace(initialList, placeNumber);
-
-                Assert.Equal(expectedExpandedList, updatedList);
+                Assert.Equal(370, TicketSalesManager.SalesTotal());
             }
         }
     }

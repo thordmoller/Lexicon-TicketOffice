@@ -43,12 +43,13 @@ namespace TicketOfficeAssignment
         /// <returns></returns>
         public static bool RemoveTicket(Ticket ticket) {
 
-            for(int i = 0; i < tickets.Count; i++) {
-                if(tickets[i].number == ticket.number) {
-                    tickets.RemoveAt(i);
-                    return true;
+            if(AmountOfTickets() > 0)
+                for(int i = 0; i < tickets.Count; i++) {
+                    if(tickets[i].number == ticket.number) {
+                        tickets.Remove(ticket);
+                        return true;
+                    }
                 }
-            }
             return false;
         }
 
@@ -71,7 +72,7 @@ namespace TicketOfficeAssignment
         /// Adds ticket to list
         /// </summary>
         /// <param name="ticket"></param>
-        /// <returns>Added ticket on success. Null if the ticketnumber is already in the list</returns>
+        /// <returns>Added ticket on success. Null if the ticket is already in the list</returns>
         public static Ticket AddTicket(Ticket ticket) {
             if(!CheckAvailability(ticket.number))
                 return null;
