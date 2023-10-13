@@ -12,12 +12,12 @@ namespace TicketOfficeAssignment.Models
         public int Id { get; set; }
         public bool ReducedVenue { get; set; }
         public DateTime Date { get; set; }
-        public string Performer { get; set; }
+        public string? Performer { get; set; }
         public int BeginsAt { get; set; }
         public int FullCapacitySales { get; set; }
 
 
-        public string ToString() {
+        public override string ToString() {
             return Id + " " + ReducedVenue + " " + Date.ToString() + " " + Performer + " " + BeginsAt + " " + FullCapacitySales;
         }
 
